@@ -7,12 +7,11 @@ import (
 
 func SetupRoutes(engine *gin.Engine) *gin.Engine {
 
-	grp := engine.Group("/v1/")
+	grp := engine.Group("/v1/youtube")
 	{
-		grp.GET("players", controller.Hello)
-		//grp.GET("players/:player_id", controller.Players.FetchPlayerByID)
-		//grp.GET("players/paginate/:page_no", controller.Players.FetchPlayerByPage)
-		//grp.POST("sleep", controller.Players.SleepService)
+		grp.POST("/add/api_key", controller.ApiPod.CreateAPIKey)
+		//grp.GET("/search/:title/:description", controller.Hello)
+		//grp.GET("/videos", controller.Hello)
 	}
 	return engine
 }

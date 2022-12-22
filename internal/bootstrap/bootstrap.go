@@ -6,6 +6,11 @@ import (
 	"github.com/razorpay/MachineRound/internal/constants"
 	"github.com/razorpay/MachineRound/internal/providers/database"
 	"github.com/razorpay/MachineRound/internal/routing"
+	"github.com/razorpay/MachineRound/internal/video"
+)
+
+var (
+	YoutubeClient video.YoutubeService
 )
 
 // InitializeRouter will initialize the web server for the application
@@ -30,6 +35,8 @@ func BaseInitWorker(basePath string, env string) {
 
 	router := gin.Default()
 
+	YoutubeClient.Initialize()
+
 	go routing.LaunchServer(router, constants.WORKER)
 }
 
@@ -38,3 +45,11 @@ func BaseInitWorker(basePath string, env string) {
 func initProviders() {
 	database.Initialize()
 }
+
+//func WaitForShutDown(ctx context.Context) {
+//	select {
+//	case <-ctx.Done():
+//		fmt.Fprint(os.Stderr, "request cancelled\n")
+//		return
+//	}
+//}

@@ -13,14 +13,14 @@ var (
 
 func Initialize() {
 	fmt.Println("Initializing postgres database...")
-	client = connect(config.GetConfig().Database)
+	client = Connect(config.GetConfig().Database)
 }
 
 func Client() *gorm.DB {
 	return client
 }
 
-func connect(database config.Database) *gorm.DB {
+func Connect(database config.Database) *gorm.DB {
 	var err error
 
 	db, err := gorm.Open(database.Dialect, database.URL())
@@ -31,10 +31,6 @@ func connect(database config.Database) *gorm.DB {
 
 	// This will prevent update or delete without where clause
 	db.BlockGlobalUpdate(true)
-
-	// setting db connection params
-	db.DB().SetMaxIdleConns(database.MaxIdleConnections)
-	db.DB().SetMaxOpenConns(database.MaxOpenConnections)
 
 	return db
 }

@@ -2,8 +2,8 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"github.com/razorpay/MachineRound/internal/bootstrap"
+	"github.com/sirupsen/logrus"
 )
 
 var (
@@ -18,7 +18,7 @@ func init() {
 }
 
 func main() {
-	fmt.Println("Starting the api layer ...")
+	logrus.Println("Starting the api layer ...")
 	flag.Parse()
 
 	bootstrap.BaseInitApi(*basePath, *env)

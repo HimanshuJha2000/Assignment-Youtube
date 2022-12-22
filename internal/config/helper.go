@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/BurntSushi/toml"
 	"os"
+	"strconv"
 )
 
 // loadConfigFromFile: load/overwrite config values from given basepath, filename and env
@@ -38,4 +39,8 @@ func getFilePath(filePath string, basePath string, fileName string, env string) 
 	path := fmt.Sprintf(filePath, basePath, fileName)
 
 	return path
+}
+
+func GetYoutubeURLRequestEndpoint(base_url string, api_key string, count int, query string) string {
+	return base_url + "key=" + api_key + "&type=video&part=snippet&maxResults=" + strconv.Itoa(count) + "&order=date&q=" + query
 }

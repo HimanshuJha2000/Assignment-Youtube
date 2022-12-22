@@ -17,9 +17,10 @@ var (
 
 // appConfig global configuration struct definition
 type appConfig struct {
-	Database    Database    `toml:"database"`
-	Application application `toml:"application"`
-	Worker      worker      `toml:"worker"`
+	Database    Database      `toml:"database"`
+	Application application   `toml:"application"`
+	Worker      worker        `toml:"worker"`
+	Youtube     YoutubeConfig `toml:"youtube"`
 }
 
 func LoadConfig(basePath string, env string) {
