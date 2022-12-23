@@ -1,0 +1,24 @@
+FROM golang:1.19-alpine3.16
+
+ENV APP_NAME=api
+ENV SRC_DIR=/go/src/github.com/Fampay/$APP_NAME
+ENV GIT_COMMIT_HASH="dev"
+ENV GO111MODULE=on
+
+WORKDIR $SRC_DIR
+
+ADD . $SRC_DIR
+
+RUN set -eux && \
+    apk add --no-cache git bash su-exec && \
+    addgroup -S appuser && \
+    adduser -S appuser -G appuser && \
+    go mod vendor && \
+    CGO_ENABLED=0 GOOS=linux go build -ldflags "-X main.AppVersion=$GIT_COMMIT_HASH" -o /bin/$APP_NAME ./cmd/api/ && \
+    CGO_ENABLED=0 GOOS=linux go build -ldflags "-X main.AppVersion=$GIT_COMMIT_HASH" -o /bin/migrate ./migrations
+
+EXPOSE 8080
+
+RUN chmod +x entrypoint.sh
+
+ENTRYPOINT ["sh", "entrypoint.sh", "api"]

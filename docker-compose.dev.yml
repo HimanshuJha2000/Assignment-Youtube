@@ -1,0 +1,28 @@
+version: '2'
+services:
+
+  youtube_api_pod:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    image: fampay:youtube_api
+    container_name: youtube_api
+    networks:
+      - api_default
+    ports:
+      - 8080:8080
+
+  youtube_worker_pod:
+    build:
+      context: .
+      dockerfile: Dockerfile.worker
+    image: fampay:youtube_worker
+    container_name: youtube_worker
+    networks:
+      - api_default
+    ports:
+      - 8081:8081
+
+networks:
+  api_default:
+    external: false

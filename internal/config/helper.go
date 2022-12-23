@@ -5,6 +5,7 @@ import (
 	"github.com/BurntSushi/toml"
 	"os"
 	"strconv"
+	"time"
 )
 
 // loadConfigFromFile: load/overwrite config values from given basepath, filename and env
@@ -35,12 +36,12 @@ func getFilePath(filePath string, basePath string, fileName string, env string) 
 	if env != "" {
 		fileName = fmt.Sprintf(fileName, envFile)
 	}
-
 	path := fmt.Sprintf(filePath, basePath, fileName)
 
 	return path
 }
 
 func GetYoutubeURLRequestEndpoint(base_url string, api_key string, count int, query string) string {
-	return base_url + "key=" + api_key + "&type=video&part=snippet&maxResults=" + strconv.Itoa(count) + "&order=date&q=" + query
+	timeObj := time.Now().Add(time.Minute * (-5)).Format("2006-01-02T15:04:05Z")
+	return base_url + "key=" + api_key + "&type=video&part=snippet&maxResults=" + strconv.Itoa(count) + "&order=date&publishedAfter=" + timeObj + "&q=" + query
 }

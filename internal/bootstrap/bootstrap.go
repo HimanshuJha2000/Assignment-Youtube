@@ -1,16 +1,14 @@
 package bootstrap
 
 import (
-	"github.com/gin-gonic/gin"
 	"github.com/razorpay/MachineRound/internal/config"
-	"github.com/razorpay/MachineRound/internal/constants"
 	"github.com/razorpay/MachineRound/internal/providers/database"
 	"github.com/razorpay/MachineRound/internal/routing"
-	"github.com/razorpay/MachineRound/internal/video"
+	"github.com/razorpay/MachineRound/internal/youtube_video"
 )
 
 var (
-	YoutubeClient video.YoutubeService
+	YoutubeClient youtube_video.YoutubeService
 )
 
 // InitializeRouter will initialize the web server for the application
@@ -33,11 +31,11 @@ func BaseInitWorker(basePath string, env string) {
 
 	initProviders()
 
-	router := gin.Default()
+	//router := gin.Default()
 
 	YoutubeClient.Initialize()
 
-	go routing.LaunchServer(router, constants.WORKER)
+	//go routing.LaunchServer(router, constants.WORKER)
 }
 
 // initProviders : Provider initialization is done here

@@ -1,0 +1,20 @@
+version: '2'
+services:
+  service_db:
+    image: postgres:10
+    container_name: service_database
+    restart: unless-stopped
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: youtube_service
+      POSTGRES_PASSWORD: abc@1234
+      POSTGRES_DB: youtube_service
+    volumes:
+      - ./create_local_db.sql:/docker-entrypoint-initdb.d
+    networks:
+      - api_default
+
+networks:
+  api_default:
+    external: false

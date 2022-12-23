@@ -7,7 +7,17 @@ const (
 
 	API = "api"
 
-	WORKER = "worker"
-
 	REQUEST_TIMEOUT = 2000 * time.Millisecond
+
+	API_Key_Threshold = 97
+
+	MigrationDir = "dir"
+
+	DefaultMigrationDir = "migrations"
+
+	Development = "dev"
+
+	Env = "env"
+
+	DefaultBasePath = "."
 )

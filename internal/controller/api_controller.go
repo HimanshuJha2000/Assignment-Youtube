@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"github.com/gin-gonic/gin"
 	"github.com/razorpay/MachineRound/internal/api_key"
+	"github.com/sirupsen/logrus"
 	"io/ioutil"
 	"net/http"
 )
@@ -29,6 +30,7 @@ func (controller ApiPodController) CreateAPIKey(ctx *gin.Context) {
 	if err != nil {
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, "Error : Bad Request! API key already exists!")
 	} else {
+		logrus.Println("New API key has been added to database")
 		ctx.JSON(http.StatusOK, "API key added successfully!")
 	}
 }
