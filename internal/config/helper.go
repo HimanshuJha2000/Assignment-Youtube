@@ -42,6 +42,6 @@ func getFilePath(filePath string, basePath string, fileName string, env string) 
 }
 
 func GetYoutubeURLRequestEndpoint(base_url string, api_key string, count int, query string) string {
-	timeObj := time.Now().Add(time.Minute * (-5)).Format("2006-01-02T15:04:05Z")
+	timeObj := time.Now().Add(time.Minute * (-30)).Format("2006-01-02T15:04:05Z")
 	return base_url + "key=" + api_key + "&type=video&part=snippet&maxResults=" + strconv.Itoa(count) + "&order=date&publishedAfter=" + timeObj + "&q=" + query
 }

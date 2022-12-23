@@ -18,7 +18,8 @@ func (Am *ApiKeyModel) Create() error {
 }
 
 func (Am *ApiKeyModel) GetApiKey() string {
-	err := database.Client().Model(&Am).Where("is_valid = ?", 1).First(&Am).Updates(map[string]interface{}{"usage_count": Am.UsageCount + 1}).Error
+	err := database.Client().Model(&Am).Where("is_valid = ?", 1).First(&Am).Error
+	err = database.Client().Model(&Am).Where("api_key = ?", Am.ApiKey).Updates(map[string]interface{}{"usage_count": Am.UsageCount + 1}).Error
 	if err != nil {
 		fmt.Errorf(err.Error())
 		return Am.ApiKey

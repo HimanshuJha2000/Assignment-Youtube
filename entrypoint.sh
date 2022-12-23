@@ -24,7 +24,6 @@ collect_process()
 start_youtube_api()
 {
     echo "Starting Youtube API layer"
-    ls -al
     su-exec appuser /bin/api -base_path=${SRC_DIR} &
 
     collect_process

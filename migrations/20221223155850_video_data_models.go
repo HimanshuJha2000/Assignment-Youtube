@@ -17,8 +17,7 @@ func upVideoDataModels(tx *sql.Tx) error {
 		channel_title varchar(200) NOT NULL,
 		thumbnail_url varchar(200),
 		PRIMARY KEY(Title, Description)
-    );
-	CREATE INDEX video_data_models_pkey ON video_data_models USING btree (title, description);`)
+    );`)
 	if err != nil {
 		return err
 	}

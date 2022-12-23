@@ -25,17 +25,21 @@ func (YService *YoutubeService) Initialize() {
 func BeginWorkerCron() {
 	ticker := time.NewTicker(time.Duration(youtubeConfig.TickerTime) * time.Second)
 
+	var (
+		response map[string]interface{}
+		err      error
+		code     int
+	)
 	for {
 		select {
 		case <-ticker.C:
 			logrus.Println("Fetching of youtube data has started via cron")
-			response, err, code := makeCallToYoutubeApi()
 
+			response, err, code = makeCallToYoutubeApi()
 			if code == http.StatusOK {
 				SaveInDatabase(response)
 			} else {
-				fmt.Errorf(err.Error())
-				logrus.Println("Received error while calling Youtube API! ", err)
+				logrus.Println("Received error while calling Youtube API! Error is ", err)
 				continue
 			}
 		}
@@ -45,6 +49,11 @@ func BeginWorkerCron() {
 func makeCallToYoutubeApi() (map[string]interface{}, error, int) {
 	var apiKeyObj api_key.ApiKeyModel
 	apiKey := apiKeyObj.GetApiKey()
+
+	if apiKey == "" {
+		logrus.Println("No API key found! Hitting Youtube API has been stopped! ")
+		return nil, fmt.Errorf("no Valid/Available API key"), http.StatusForbidden
+	}
 
 	URL := config.GetYoutubeURLRequestEndpoint(youtubeConfig.Endpoint, apiKey, youtubeConfig.MaxResults, youtubeConfig.Query)
 	req, err := http.NewRequest(http.MethodGet, URL, nil)
@@ -58,7 +67,6 @@ func makeCallToYoutubeApi() (map[string]interface{}, error, int) {
 
 	client := httpclient.NewClient(httpclient.WithHTTPTimeout(time.Duration(15) * time.Second))
 	response, rerr := client.Do(req)
-	fmt.Println(response.StatusCode)
 
 	responseBody, _ := ioutil.ReadAll(response.Body)
 

@@ -1,27 +1,39 @@
 version: '2'
 services:
 
-  youtube_api_pod:
+  postgres:
+    image: postgres:10
+    restart: unless-stopped
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: youtube_service
+      POSTGRES_PASSWORD: abc@1234
+      POSTGRES_DB: youtube_service
+    volumes:
+      - ./create_local_db.sql:/docker-entrypoint-initdb.d
+    networks:
+      - api_default
+
+  api:
     build:
       context: .
       dockerfile: Dockerfile.api
-    image: fampay:youtube_api
-    container_name: youtube_api
     networks:
       - api_default
     ports:
-      - 8080:8080
+      - '8080:8080'
+    environment:
+      WAIT_HOSTS: postgres:5432
 
-  youtube_worker_pod:
+  worker:
     build:
       context: .
       dockerfile: Dockerfile.worker
-    image: fampay:youtube_worker
-    container_name: youtube_worker
     networks:
       - api_default
-    ports:
-      - 8081:8081
+    environment:
+      WAIT_HOSTS: postgres:5432
 
 networks:
   api_default:
