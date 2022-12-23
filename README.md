@@ -19,6 +19,8 @@ To make an API to fetch latest videos sorted in reverse chronological order of t
 
 ## Setup using Docker
 
+Prerequisite : Docker should be installed and started
+
 ```  
   # Clone the repository
   $ git clone git@github.com:HimanshuJha2000/Assignment-Youtube.git
