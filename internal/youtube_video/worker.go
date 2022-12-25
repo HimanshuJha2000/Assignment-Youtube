@@ -39,8 +39,7 @@ func BeginWorkerCron() {
 			if code == http.StatusOK {
 				SaveInDatabase(response)
 			} else if code == http.StatusForbidden {
-				logrus.Println("Google account quota exceeded for the day! ")
-				continue
+				panic("Account has reached its limit to request data from youtube")
 			} else {
 				logrus.Println("Received error while calling Youtube API! Error is ", err)
 				continue
