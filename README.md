@@ -38,6 +38,8 @@ Prerequisite : Docker should be installed and started
 - Support for auto switch over to new Youtube API key once the older key has been exhausted is added.
 - Composite indexing has been done on title and description of a youtube video.
 
+### [Postman Collection](https://api.postman.com/collections/16960428-0e10276e-0960-4ffe-9f93-26d39747cb7b?access_key=PMAT-01GN42TH8Q6NE1CF37TZNTR4ZY)
+
 ### API's Postman ScreenShots
 
 - POST API to add a new Youtube Data API Key in the database
