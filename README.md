@@ -29,6 +29,12 @@ Prerequisite : Docker should be installed and started
   $ docker-compose -f docker-compose.dev.yml up
   # This will start postgres, youtube-api and youtube-worker containers
 ```  
+
+### Tech stack Used
+1. Postgres DB
+3. Gin HTTP web framework (available in Golang)
+4. GORM (ORM library for Golang)
+5. Docker
   
 ### Working
 
